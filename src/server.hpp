@@ -1,10 +1,13 @@
+#include <string>
+#include <iostream>
+#include "util.hpp"
+
 namespace server {
 
   class generic_tcp {
     public:
-      generic_tcp(util::config config) {
-        config.print_config();
-      }
+      explicit generic_tcp (util::config config);
+      void run();
   };
 
 }

@@ -1,8 +1,4 @@
-#include <iostream>
-#include <string>
-#include <exception>
-#include "src/util.hpp"
-#include "src/server.hpp"
+#include "main.hpp"
 
 using namespace std;
 
