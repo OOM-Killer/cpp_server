@@ -1,2 +1,4 @@
 server
 .*\.swp
+.*\.o
+.*\.gch
