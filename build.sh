@@ -1,10 +1,16 @@
 #!/bin/bash
 
+COMPILER_FLAGS=""
+if [ "${1}" == "debug" ]
+then
+  COMPILER_FLAGS="${COMPILER_FLAGS} -g -ggdb "
+fi
 
 OUTPUT_FILE="server "
 OBJECTS="main src/server src/util/argument_parser src/util/bad_args src/util/config src/util/helper"
-OBJECT_BUILD_CMD="g++ -c -Isrc/util -Isrc"
-OBJECT_LINK_CMD="g++ -o ${OUTPUT_FILE} "
+OBJECT_BUILD_CMD="g++ ${COMPILER_FLAGS} -c -Isrc/util -Isrc"
+OBJECT_LINK_CMD="g++ ${COMPILER_FLAGS} -o ${OUTPUT_FILE} "
+
 
 find . -name "*.gch" -exec rm {} \; 2> /dev/null
 find . -name "*.o" -exec rm {} \; 2> /dev/null
