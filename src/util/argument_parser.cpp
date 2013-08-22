@@ -1,10 +1,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-#include <iostream>
-#include <string>
-#include <exception>
-
+#include <config.hpp>
 #include <bad_args.hpp>
 #include <argument_parser.hpp>
 

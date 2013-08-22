@@ -1,5 +1,5 @@
 server
 server_debug
-.*\.swp
-.*\.o
-.*\.gch
+*.swp
+*.o
+*.gch

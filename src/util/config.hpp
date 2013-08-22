@@ -1,7 +1,7 @@
 #include <string>
 
-#ifndef __CONFIG_H_INCLUDED__
-#define __CONFIG_H_INCLUDED__
+#ifndef __UTIL_CONFIG_H_INCLUDED__
+#define __UTIL_CONFIG_H_INCLUDED__
 
 namespace util {
 
