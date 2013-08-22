@@ -1,14 +1,15 @@
 #!/bin/bash
 
+OUTPUT_FILE="server "
 COMPILER_FLAGS=""
 if [ "${1}" == "debug" ]
 then
   COMPILER_FLAGS="${COMPILER_FLAGS} -g -ggdb "
+  OUTPUT_FILE="server_debug "
 fi
 
-OUTPUT_FILE="server "
-OBJECTS="main src/server src/util/argument_parser src/util/bad_args src/util/config src/util/helper"
-OBJECT_BUILD_CMD="g++ ${COMPILER_FLAGS} -c -Isrc/util -Isrc"
+OBJECTS="main src/server/generic_socket src/server/generic_tcp_server src/server/socket_exception src/server/tcp_server_socket src/util/argument_parser src/util/bad_args src/util/config src/util/helper"
+OBJECT_BUILD_CMD="g++ ${COMPILER_FLAGS} -c -Isrc/util -Isrc/server -Isrc"
 OBJECT_LINK_CMD="g++ ${COMPILER_FLAGS} -o ${OUTPUT_FILE} "
 
 

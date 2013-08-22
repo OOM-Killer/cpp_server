@@ -1,4 +1,8 @@
 #include "main.hpp"
+#include <generic_tcp_server.hpp>
+#include <argument_parser.hpp>
+#include <bad_args.hpp>
+#include <helper.hpp>
 
 using namespace std;
 

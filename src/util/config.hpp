@@ -1,8 +1,7 @@
-#include <iostream>
 #include <string>
-#include <exception>
-#include <string.h>
-#include <stdlib.h>
+
+#ifndef __CONFIG_H_INCLUDED__
+#define __CONFIG_H_INCLUDED__
 
 namespace util {
 
@@ -22,3 +21,5 @@ namespace util {
       int thread_pool_size_;
   };
 }
+
+#endif

@@ -1,10 +1,4 @@
-#include <iostream>
-#include <string>
-#include <exception>
-#include <string.h>
-#include <stdlib.h>
 #include <config.hpp>
-#include <bad_args.hpp>
 
 namespace util {
 
