@@ -36,5 +36,3 @@ CMD="${OBJECT_LINK_CMD} ${OBJECT_STRING}"
 echo ${CMD}
 ${CMD}
 
-find . -name "*.gch" -exec rm {} \; 2> /dev/null
-find . -name "*.o" -exec rm {} \; 2> /dev/null
