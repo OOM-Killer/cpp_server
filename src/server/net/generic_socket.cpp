@@ -12,7 +12,6 @@ namespace server {
 namespace net {
 
   generic_socket::generic_socket(int type, int protocol) {
-    std::cout << "creating socket\n";
     socket_descriptor = socket(PF_INET, type, protocol);
   }
 

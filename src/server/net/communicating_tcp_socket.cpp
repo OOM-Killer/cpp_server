@@ -2,8 +2,6 @@
 #include <unistd.h>
 #include <netdb.h>
 
-#include <iostream>
-
 #include <socket_exception.hpp>
 
 namespace server {
@@ -30,7 +28,6 @@ namespace net {
 
     void communicating_tcp_socket::cleanup() {
       close(sockdesc_);
-      std::cout << "closing\n";
     }
 }
 }
