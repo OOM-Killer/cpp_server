@@ -3,6 +3,7 @@
 #include <socket_exception.hpp>
 
 namespace server {
+namespace net{
 
   socket_exception::socket_exception(const char *message):
     msg_(message) {}
@@ -13,4 +14,5 @@ namespace server {
   const char* socket_exception::what() const throw() {
     return msg_.c_str();
   }
+}
 }

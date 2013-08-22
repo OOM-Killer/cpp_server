@@ -1,5 +1,6 @@
 
 namespace server {
+namespace net {
 
   class socket_exception: public std::exception
   {
@@ -13,4 +14,5 @@ namespace server {
       std::string msg_;
   };
 
+}
 }

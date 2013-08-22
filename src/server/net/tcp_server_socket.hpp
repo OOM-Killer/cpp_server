@@ -1,6 +1,7 @@
 #include <communicating_tcp_socket.hpp>
 
 namespace server {
+namespace net {
 
   class tcp_server_socket : public generic_socket {
     public:
@@ -8,4 +9,5 @@ namespace server {
       void set_listen(int queue_len = 5);
       communicating_tcp_socket accept();
   };
+}
 }

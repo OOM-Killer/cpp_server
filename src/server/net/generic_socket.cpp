@@ -9,6 +9,7 @@
 #include <socket_exception.hpp>
 
 namespace server {
+namespace net {
 
   generic_socket::generic_socket(int type, int protocol) {
     std::cout << "creating socket\n";
@@ -35,4 +36,5 @@ namespace server {
     }
   }
 
+}
 }

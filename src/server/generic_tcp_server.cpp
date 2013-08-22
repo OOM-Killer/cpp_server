@@ -12,9 +12,11 @@ namespace server {
 
   void generic_tcp_server::run() {
     std::cout << "starting\n";
-    tcp_server_socket tss(config_.get_bind_hostname(), config_.get_bind_port());
+    net::tcp_server_socket tss(config_.get_bind_hostname(), config_.get_bind_port());
     tss.set_listen(3);
-    tss.accept();
+    while (1) {
+      tss.accept();
+    }
   }
 
 }

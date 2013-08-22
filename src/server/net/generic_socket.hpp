@@ -4,6 +4,7 @@
 #include <string>
 
 namespace server {
+namespace net {
 
   class generic_socket {
     public:
@@ -14,6 +15,7 @@ namespace server {
       int socket_descriptor;
   };
 
+}
 }
 
 #endif

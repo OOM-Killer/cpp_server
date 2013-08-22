@@ -9,6 +9,7 @@
 #include <socket_exception.hpp>
 
 namespace server {
+namespace net {
 
   tcp_server_socket::tcp_server_socket(std::string bind_hostname, int bind_port)
   : generic_socket(SOCK_STREAM, IPPROTO_TCP) {
@@ -30,4 +31,5 @@ namespace server {
 
     return communicating_tcp_socket(new_conn);
   }
+}
 }
