@@ -1,6 +1,7 @@
 #include <iostream>
 
 #include <config.hpp>
+#include <generic_handler.hpp>
 
 namespace util {
 
@@ -28,6 +29,14 @@ namespace util {
 
   int config::get_thread_pool_size() {
     return thread_pool_size_;
+  }
+
+  void config::set_handler(request_handler::generic_handler* handler){
+    handler_ = handler;
+  }
+
+  request_handler::generic_handler* config::get_handler() {
+    return handler_;
   }
 
 }

@@ -8,8 +8,8 @@ then
   OUTPUT_FILE="server_debug "
 fi
 
-OBJECTS="main src/server/net/generic_socket src/server/generic_tcp_server src/server/net/socket_exception src/server/net/tcp_server_socket src/util/argument_parser src/util/bad_args src/util/config src/util/helper src/server/net/communicating_tcp_socket"
-OBJECT_BUILD_CMD="g++ ${COMPILER_FLAGS} -c -Isrc/util -Isrc/server -Isrc -Isrc/server/net"
+OBJECTS="src/main src/server/net/generic_socket src/server/generic_tcp_server src/server/net/socket_exception src/server/net/tcp_server_socket src/util/argument_parser src/util/bad_args src/util/config src/util/helper src/server/net/communicating_tcp_socket src/request_handler/echo_handler src/request_handler/generic_handler"
+OBJECT_BUILD_CMD="g++ ${COMPILER_FLAGS} -c -Isrc/util -Isrc/server -Isrc -Isrc/server/net -Isrc/request_handler"
 OBJECT_LINK_CMD="g++ ${COMPILER_FLAGS} -o ${OUTPUT_FILE} "
 
 
