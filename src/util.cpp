@@ -8,6 +8,8 @@ namespace util {
     thread_pool_size_ = thread_pool_size;
   }
 
+  config::config() {}
+
   void config::print_config() {
     std::cout << "bind_hostname: " << bind_hostname_ << "\n";
     std::cout << "bind_port: " << bind_port_ << "\n";

@@ -1,10 +1,10 @@
 #!/bin/bash
 
 
-OUTPUT_FILE="server "
+OUTPUT_FILE="server_debug "
 OBJECTS="main src/server src/util"
-OBJECT_BUILD_CMD="g++ -c "
-OBJECT_LINK_CMD="g++ -o ${OUTPUT_FILE} "
+OBJECT_BUILD_CMD="g++ -c -g -ggdb "
+OBJECT_LINK_CMD="g++ -g -ggdb -o ${OUTPUT_FILE} "
 
 find . -name "*.gch" -exec rm {} \; 2> /dev/null
 find . -name "*.o" -exec rm {} \; 2> /dev/null
