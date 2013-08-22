@@ -8,7 +8,7 @@ then
   OUTPUT_FILE="server_debug "
 fi
 
-OBJECTS="main src/server/generic_socket src/server/generic_tcp_server src/server/socket_exception src/server/tcp_server_socket src/util/argument_parser src/util/bad_args src/util/config src/util/helper"
+OBJECTS="main src/server/generic_socket src/server/generic_tcp_server src/server/socket_exception src/server/tcp_server_socket src/util/argument_parser src/util/bad_args src/util/config src/util/helper src/server/communicating_tcp_socket"
 OBJECT_BUILD_CMD="g++ ${COMPILER_FLAGS} -c -Isrc/util -Isrc/server -Isrc"
 OBJECT_LINK_CMD="g++ ${COMPILER_FLAGS} -o ${OUTPUT_FILE} "
 
@@ -36,3 +36,5 @@ CMD="${OBJECT_LINK_CMD} ${OBJECT_STRING}"
 echo ${CMD}
 ${CMD}
 
+find . -name "*.gch" -exec rm {} \; 2> /dev/null
+find . -name "*.o" -exec rm {} \; 2> /dev/null

@@ -1,5 +1,6 @@
 server
 server_debug
+echo_server_example*
 *.swp
 *.o
 *.gch
