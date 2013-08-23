@@ -4,21 +4,21 @@
 #include <string>
 
 namespace server {
-namespace net {
+  namespace net {
 
-  class generic_socket {
-    public:
-      void cleanup();
-      generic_socket(int type, int protocol);
-      generic_socket(int fd);
-      void set_addr_port(std::string bind_hostname, int bind_port);
-      int reuse();
-    protected:
-      int bound_;
-      int socket_descriptor_;
-  };
+    class generic_socket {
+      public:
+        void cleanup();
+        generic_socket(int type, int protocol);
+        generic_socket(int fd);
+      protected:
+        void reuse();
+        void non_blocking();
+        int bound_;
+        int socket_descriptor_;
+    };
 
-}
+  }
 }
 
 #endif

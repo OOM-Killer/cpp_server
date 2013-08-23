@@ -1,6 +1,6 @@
 /server
 /server_debug
-/echo_server_example*
+/examples
 *.swp
 *.o
 *.gch

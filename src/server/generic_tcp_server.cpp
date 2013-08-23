@@ -16,15 +16,17 @@ namespace server {
 
   void generic_tcp_server::run() {
     request_handler::strlen_handler handler;
-    net::tcp_server_socket tss(config_.get_bind_hostname(), config_.get_bind_port());
-    tss.set_listen(3);
-    std::cout << "--- listening\n";
     while (keep_running == 1) {
       try {
-        handler.handle(tss.accept());
+        handler.handle(tss_->accept());
       } catch (request_handler::handler_exception& e) {}
     }
-    tss.cleanup();
+    tss_->cleanup();
+  }
+
+  void generic_tcp_server::prepare_socket() {
+    tss_ = new net::tcp_server_socket();
+    tss_->prepare_and_listen(config_.get_bind_hostname(), config_.get_bind_port());
   }
 
   void generic_tcp_server::shutdown() {

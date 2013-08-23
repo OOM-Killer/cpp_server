@@ -1,4 +1,4 @@
-
+#include <tcp_server_socket.hpp>
 #include <config.hpp>
 
 namespace server {
@@ -9,8 +9,10 @@ namespace server {
       void run();
       void shutdown();
     private:
+      void prepare_socket();
       util::config config_;
       int keep_running;
+      net::tcp_server_socket* tss_;
   };
 
 }

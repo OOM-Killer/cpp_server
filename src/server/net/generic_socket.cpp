@@ -1,6 +1,8 @@
 #include <netdb.h>
 #include <string.h>
 #include <errno.h>
+#include <unistd.h>
+#include <fcntl.h>
 
 #include <iostream>
 
@@ -16,41 +18,31 @@ namespace server {
       bound_ = 0;
     }
 
-    void generic_socket::set_addr_port(std::string bind_hostname, int bind_port) {
-      sockaddr_in local_addr;
-      hostent *host;
-
-      if ((host = gethostbyname(bind_hostname.c_str())) == NULL) {
-        throw socket_exception("Unable to lookup hostname");
-      }
-
-      memset(&local_addr, 0, sizeof(sockaddr_in));
-
-      local_addr.sin_family = AF_INET;
-      local_addr.sin_addr.s_addr = *((unsigned long *) host->h_addr_list[0]);
-      local_addr.sin_port = htons(bind_port);
-
-      if (bind(socket_descriptor_, (sockaddr*) &local_addr, sizeof(sockaddr_in)) < 0)
-      {
-        throw socket_exception(strerror(errno));
-      }
-
-      bound_ = 1;
-
-    }
     void generic_socket::cleanup() {
       close(socket_descriptor_);
     }
 
-    int generic_socket::reuse() {
+    void generic_socket::reuse() {
       int on = 1;
 
       if (bound_ != 0) 
-        return -1;
+        throw socket_exception("can't set reuse, socket is not bound yet");
 
-      return setsockopt(socket_descriptor_, SOL_SOCKET, SO_REUSEADDR, 
-        (const char *) &on, sizeof(on));
+      if ( setsockopt(socket_descriptor_, SOL_SOCKET, SO_REUSEADDR, (const char *) &on, sizeof(on)) == -1)
+        throw socket_exception(strerror(errno));
     }
 
+    void generic_socket::non_blocking() {
+      int flags;
+
+      flags = fcntl(socket_descriptor_, F_GETFL);
+      if (flags == -1)
+        throw socket_exception(strerror(errno));
+
+      flags |= O_NONBLOCK;
+
+      if (fcntl(socket_descriptor_, F_SETFL, flags) == -1)
+        throw socket_exception(strerror(errno));
+    }
   }
 }
