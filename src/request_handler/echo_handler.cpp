@@ -14,14 +14,22 @@ namespace request_handler {
 
     std::cout << "--- connection!\n";
 
-    do {
+    while (1) {
       received = socket_->recv(buffer, 100);
-      if (received > 0) {
-        buffer[received] = (char) NULL;
-        check_commands(buffer, received);
-        std::cout << "client: " << buffer;
-        socket_->send(buffer, received);
+
+      if (received <= 0) {
+        socket_->cleanup();
+        return;
       }
-    } while (received > 0);
+
+      if (received > 4 && strncmp("quit", buffer, (size_t) 4)) {
+        socket_->cleanup();
+        return;
+      }
+
+      buffer[received] = (char) NULL;
+      std::cout << "client: " << buffer;
+      socket_->send(buffer, received);
+    } 
   }
 }

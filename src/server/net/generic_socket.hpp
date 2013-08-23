@@ -8,11 +8,14 @@ namespace net {
 
   class generic_socket {
     public:
+      void cleanup();
       generic_socket(int type, int protocol);
       generic_socket(int fd);
       void set_addr_port(std::string bind_hostname, int bind_port);
+      int reuse();
     protected:
-      int socket_descriptor;
+      int bound_;
+      int socket_descriptor_;
   };
 
 }

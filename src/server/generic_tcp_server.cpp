@@ -10,30 +10,26 @@
 namespace server {
 
   generic_tcp_server::generic_tcp_server(util::config config):
-    config_(config) {}
+    config_(config) {
+      keep_running = 1;
+    }
 
   void generic_tcp_server::run() {
     request_handler::strlen_handler handler;
     net::tcp_server_socket tss(config_.get_bind_hostname(), config_.get_bind_port());
     tss.set_listen(3);
     std::cout << "--- listening\n";
-    while (1) {
+    while (keep_running == 1) {
       try {
         handler.handle(tss.accept());
-      } catch (request_handler::handler_exception& e) {
-        switch (e.get_cmd()) {
-          case request_handler::handler_exception::CMD_DIE:
-            std::cout << "--- dying\n";
-            return;
-          case request_handler::handler_exception::CMD_QUIT:
-            std::cout << "--- client submitted cmd quit\n";
-            break;
-          case request_handler::handler_exception::CONN_CLOSE:
-            std::cout << "--- client has closed connection\n";
-            break;
-        } 
-      }
+      } catch (request_handler::handler_exception& e) {}
     }
+    tss.cleanup();
+  }
+
+  void generic_tcp_server::shutdown() {
+    std::cout << "shutting down\n";
+    keep_running = 0;
   }
 
 }

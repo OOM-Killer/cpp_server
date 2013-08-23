@@ -21,17 +21,23 @@ namespace request_handler {
 
     while (1) {
       received = socket_->recv(buffer, 100);
-      if (received > 0) {
-        buffer[received] = (char) NULL;
-        check_commands(buffer, received);
-        output_len = snprintf(buffer, 100, "your input is %i chars long\n", received);
-        socket_->send(buffer, output_len + 1);
-        buffer[received] = (char) NULL;
-        std::cout << "input len: " << received << "\n";
-      } else {
+
+      if (received <= 0) {
+        std::cout << "--- client closed conn\n";
         socket_->cleanup();
-        throw request_handler::handler_exception(request_handler::handler_exception::CONN_CLOSE);
+        return;
       }
-    }
+
+      if (received > 4 && strncmp("quit", buffer, (size_t) 4) == 0) {
+        std::cout << "--- client sent quit\n";
+        socket_->cleanup();
+        return;
+      }
+
+      output_len = snprintf(buffer, 100, "your input is %i chars long\n", received);
+      socket_->send(buffer, output_len + 1);
+      buffer[received] = (char) NULL;
+      std::cout << "input len: " << received << "\n";
+    } 
   }
 }
