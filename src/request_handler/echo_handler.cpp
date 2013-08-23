@@ -9,22 +9,19 @@ namespace request_handler {
   void echo_handler::handle(server::net::communicating_tcp_socket socket) {
     char buffer[100];
     int received = 1;
+
+    socket_ = &socket;
+
     std::cout << "--- connection!\n";
 
     do {
-      received = socket.recv(buffer, 100);
+      received = socket_->recv(buffer, 100);
       if (received > 0) {
-        if (strncmp(buffer, "quit", 4) == 0){
-          std::cout << "--- quit command\n";
-          socket.cleanup();
-          return;
-        }
         buffer[received] = (char) NULL;
+        check_commands(buffer, received);
         std::cout << "client: " << buffer;
-        socket.send(buffer, received);
+        socket_->send(buffer, received);
       }
     } while (received > 0);
-    std::cout << "--- client closed connection\n";
-    socket.cleanup();
   }
 }

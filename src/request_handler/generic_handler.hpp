@@ -8,8 +8,9 @@ namespace request_handler {
   class generic_handler {
     public:
       generic_handler();
+      void check_commands(char*, size_t);
       virtual void handle(server::net::communicating_tcp_socket socket);
-    private:
+    protected:
       server::net::communicating_tcp_socket* socket_;
   };
 }

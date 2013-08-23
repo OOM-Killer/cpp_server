@@ -3,7 +3,7 @@ LDFLAGS=
 DEBUGFLAGS=-g -ggdb -O0
 PROFILEFLAGS=-pg
 CFLAGS=-c -Wall -Werror -Isrc/util -Isrc/server -Isrc -Isrc/server/net -Isrc/request_handler
-SOURCES=src/main.cpp src/server/net/generic_socket.cpp src/server/generic_tcp_server.cpp src/server/net/socket_exception.cpp src/server/net/tcp_server_socket.cpp src/util/argument_parser.cpp src/util/bad_args.cpp src/util/config.cpp src/util/helper.cpp src/server/net/communicating_tcp_socket.cpp src/request_handler/echo_handler.cpp src/request_handler/generic_handler.cpp
+SOURCES=src/main.cpp src/server/net/generic_socket.cpp src/server/generic_tcp_server.cpp src/server/net/socket_exception.cpp src/server/net/tcp_server_socket.cpp src/util/argument_parser.cpp src/util/msg_exception.cpp src/util/bad_args.cpp src/util/config.cpp src/util/helper.cpp src/server/net/communicating_tcp_socket.cpp src/request_handler/echo_handler.cpp src/request_handler/generic_handler.cpp src/request_handler/strlen_handler.cpp src/request_handler/handler_exception.cpp
 OBJECTS=$(SOURCES:.cpp=.o)
 EXECUTABLE=server
 
@@ -28,3 +28,4 @@ clean:
 
 .cpp.o:
 	$(CC) $(CFLAGS) $< -o $@
+

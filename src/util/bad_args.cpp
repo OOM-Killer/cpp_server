@@ -5,13 +5,9 @@
 namespace util {
 
   bad_args::bad_args(const char *message):
-    msg_(message) {}
+    msg_exception(message) {}
 
   bad_args::bad_args(const std::string message):
-    msg_(message) {}
-
-  const char* bad_args::what() const throw() {
-    return msg_.c_str();
-  }
+    msg_exception(message) {}
 
 }
