@@ -11,6 +11,7 @@ namespace server {
         void cleanup();
         generic_socket(int type, int protocol);
         generic_socket(int fd);
+        int get_fd();
       protected:
         void reuse();
         void non_blocking();

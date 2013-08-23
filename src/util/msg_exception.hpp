@@ -1,3 +1,7 @@
+#ifndef ___SRC_UTIL_MSG_EXCEPTION_H_DEFINED___
+#define ___SRC_UTIL_MSG_EXCEPTION_H_DEFINED___
+
+#include <string>
 
 namespace util {
 
@@ -13,3 +17,5 @@ namespace util {
       std::string msg_;
   };
 }
+
+#endif

@@ -18,6 +18,7 @@ namespace server {
         void set_addr_port(std::string bind_hostname, int bind_port);
         sockaddr_in local_addr_;
     };
+
   }
 }
 #endif

@@ -6,6 +6,7 @@
 #include <generic_tcp_server.hpp>
 #include <strlen_handler.hpp>
 #include <handler_exception.hpp>
+#include <epoll_event_listener.hpp>
 
 namespace server {
 
@@ -16,12 +17,12 @@ namespace server {
 
   void generic_tcp_server::run() {
     request_handler::strlen_handler handler;
-    while (keep_running == 1) {
-      try {
-        handler.handle(tss_->accept());
-      } catch (request_handler::handler_exception& e) {}
-    }
+    event_listener_ = new event::epoll_event_listener(5);
+    prepare_socket();
+    event_listener_->add_listening_socket(tss_->get_fd());
+    event_listener_->listen();
     tss_->cleanup();
+    delete tss_;
   }
 
   void generic_tcp_server::prepare_socket() {
@@ -30,8 +31,7 @@ namespace server {
   }
 
   void generic_tcp_server::shutdown() {
-    std::cout << "shutting down\n";
-    keep_running = 0;
+    event_listener_->shutdown();
   }
 
 }

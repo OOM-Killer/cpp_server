@@ -44,5 +44,10 @@ namespace server {
       if (fcntl(socket_descriptor_, F_SETFL, flags) == -1)
         throw socket_exception(strerror(errno));
     }
+
+    int generic_socket::get_fd() {
+      return socket_descriptor_;
+    }
+
   }
 }

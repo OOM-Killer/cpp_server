@@ -10,6 +10,7 @@
 using namespace std;
 
 server::generic_tcp_server* global_server;
+int keep_running = 1;
 
 void register_signal_handlers();
 void shutdown_server(int);
