@@ -8,7 +8,7 @@
 namespace util {
 
   argument_parser::argument_parser(int argc, char **argv) {
-    int i;
+    size_t i;
 
     if (argc < 4)
       throw bad_args("too few arguments");
