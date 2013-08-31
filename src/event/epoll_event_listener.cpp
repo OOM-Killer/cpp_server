@@ -7,15 +7,17 @@
 #include <sys/socket.h>
 
 #include <iostream>
+#include <thread>
 
 #include <msg_exception.hpp>
+#include <worker.hpp>
 #include <epoll_event_listener.hpp>
 
 
 namespace event {
 
   void epoll_event_listener::dispatcher(int fd) {
-    std::cout << "event to dispatch\n";
+    std::cout << "event to dispatch in thread " << std::this_thread::get_id() << "\n";
   }
 
   epoll_event_listener::epoll_event_listener(int maxevents) {
@@ -54,7 +56,7 @@ namespace event {
         if (events_[i].data.fd == sfd_) {
           newfd = accept(sfd_, NULL, NULL);
           register_event(EPOLLIN | EPOLLET, newfd);
-          std::cout << "event on listening socket\n";
+          std::cout << "event on listening socket at thread " << std::this_thread::get_id() << "\n";
         } else {
           dispatcher(events_[i].data.fd);
         }
