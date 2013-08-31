@@ -19,13 +19,7 @@ namespace server {
     }
 
   void generic_tcp_server::run() {
-    //request_handler::strlen_handler handler;
-    //prepare_socket();
     thread_pool::pool_keeper pk(config_.get_thread_pool_size(), tss_->get_fd());
-    //pk.workers_listen(tss_->get_fd());
-    /*event_listener_ = new event::epoll_event_listener(5);
-      event_listener_->add_listening_socket(tss_->get_fd());
-      event_listener_->listen();*/
   }
 
   generic_tcp_server::~generic_tcp_server() {
@@ -34,7 +28,6 @@ namespace server {
   }
 
   void generic_tcp_server::shutdown() {
-    //event_listener_->shutdown();
   }
 
 }

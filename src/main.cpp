@@ -23,8 +23,6 @@ int main (int argc, char **argv)
     util::argument_parser ap(argc, argv);
     util::config config = ap.get_config();
 
-    //config.set_handler(handler);
-   
     server::generic_tcp_server gts(ap.get_config());
     global_server = &gts;
     global_server->run();
