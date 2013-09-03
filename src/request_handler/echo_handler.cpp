@@ -6,30 +6,10 @@
 
 namespace request_handler {
 
-  void echo_handler::handle(server::net::communicating_tcp_socket socket) {
-    char buffer[100];
-    int received = 1;
+  void echo_handler::handler_logic() {
 
-    socket_ = &socket;
-
-    std::cout << "--- connection!\n";
-
-    while (1) {
-      received = socket_->recv(buffer, 100);
-
-      if (received <= 0) {
-        socket_->cleanup();
-        return;
-      }
-
-      if (received > 4 && strncmp("quit", buffer, (size_t) 4)) {
-        socket_->cleanup();
-        return;
-      }
-
-      buffer[received] = (char) NULL;
-      std::cout << "client: " << buffer;
-      socket_->send(buffer, received);
-    } 
+    buffer_[received_] = (char) NULL;
+    std::cout << "client: " << buffer_;
+    socket_.send(buffer_, received_);
   }
 }

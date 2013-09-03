@@ -5,24 +5,37 @@
 
 namespace request_handler {
 
-  generic_handler::generic_handler(){}
-
-  void generic_handler::handle(server::net::communicating_tcp_socket socket) {
+  generic_handler::generic_handler(){
+    socket_ = server::net::communicating_tcp_socket();
   }
 
-  void generic_handler::check_commands(char* buffer, size_t len){
-    handler_exception::cmd_e cmd;
-    if (strncmp(buffer, "quit", 4) == 0) {
-      cmd = handler_exception::CMD_QUIT;
-      goto except;
+  void generic_handler::handler_logic() {
+  }
+
+  generic_handler::status generic_handler::handle() {
+    generic_handler::cmd cmd_ret;
+    while (1) {
+      received_ = socket_.recv(buffer_, 100);
+      if (received_ == -1 && errno == EAGAIN)
+        break;
+      if (received_ == 0)
+        return generic_handler::CONN_CLOSE;
+      cmd_ret = check_commands(); 
+      if (cmd_ret == generic_handler::CMD_NONE)
+        handler_logic();
+      else
+        return (generic_handler::status) cmd_ret;
     }
-    if (strncmp(buffer, "die", 3) == 0) {
-      cmd = handler_exception::CMD_DIE;
-      goto except;
+    return generic_handler::CONT;
+  }
+
+  generic_handler::cmd generic_handler::check_commands() {
+    if (received_ >= 4 && strncmp(buffer_, "quit", 4) == 0) {
+      return generic_handler::CMD_QUIT;
     }
-    return;
-except:
-    socket_->cleanup();
-    throw request_handler::handler_exception(cmd);
+    if (received_ >= 3 && strncmp(buffer_, "die", 3) == 0) {
+      return generic_handler::CMD_DIE;
+    }
+    return generic_handler::CMD_NONE;
   }
 }

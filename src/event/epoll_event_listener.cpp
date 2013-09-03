@@ -10,14 +10,16 @@
 #include <thread>
 
 #include <msg_exception.hpp>
+#include <handler_exception.hpp>
 #include <worker.hpp>
 #include <epoll_event_listener.hpp>
+#include <communicating_tcp_socket.hpp>
 
 
 namespace event {
 
-  void epoll_event_listener::dispatcher(int fd) {
-    std::cout << "event to dispatch in thread " << std::this_thread::get_id() << "\n";
+  void epoll_event_listener::add_request_handler(request_handler::generic_handler* event_handler) {
+    event_handler_ = event_handler;
   }
 
   epoll_event_listener::epoll_event_listener(int maxevents) {
@@ -35,7 +37,6 @@ namespace event {
   }
 
   void epoll_event_listener::register_event(uint32_t events, int fd) {
-
     event_.data.fd = fd;
     event_.events = events;
     epoll_ctl(efd_, EPOLL_CTL_ADD, fd, &event_);
@@ -48,6 +49,7 @@ namespace event {
 
   void epoll_event_listener::listen() {
     int n, i, newfd;
+    request_handler::generic_handler::status handler_status;
 
     while (keep_running_ == 1) {
       n = epoll_wait(efd_, events_, maxevents_, -1);
@@ -58,7 +60,25 @@ namespace event {
           register_event(EPOLLIN | EPOLLET, newfd);
           std::cout << "event on listening socket at thread " << std::this_thread::get_id() << "\n";
         } else {
-          dispatcher(events_[i].data.fd);
+          event_handler_->socket_.set_fd(events_[i].data.fd);
+          std::cout << "dispatching\n";
+          handler_status = event_handler_->handle();
+          switch (handler_status) {
+            case request_handler::generic_handler::QUIT:
+              std::cout << "quit\n";
+              event_handler_->socket_.cleanup();
+              break;
+            case request_handler::generic_handler::DIE:
+              std::cout << "die\n";
+              shutdown();
+              break;
+            case request_handler::generic_handler::CONN_CLOSE:
+              std::cout << "conn close\n";
+              event_handler_->socket_.cleanup();
+              break;
+            default:
+              break;
+          }
         }
       }
     }

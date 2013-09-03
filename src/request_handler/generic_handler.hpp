@@ -7,11 +7,26 @@ namespace request_handler {
 
   class generic_handler {
     public:
+      enum status {
+        QUIT,
+        DIE,
+        CONN_CLOSE,
+        CONT
+      };
       generic_handler();
-      void check_commands(char*, size_t);
-      virtual void handle(server::net::communicating_tcp_socket socket);
+      generic_handler::status handle();
+      virtual void handler_logic();
+      server::net::communicating_tcp_socket socket_;
     protected:
-      server::net::communicating_tcp_socket* socket_;
+      char buffer_[100];
+      int received_;
+    private:
+      enum cmd {
+        CMD_QUIT,
+        CMD_DIE,
+        CMD_NONE
+      };
+      generic_handler::cmd check_commands();
   };
 }
 

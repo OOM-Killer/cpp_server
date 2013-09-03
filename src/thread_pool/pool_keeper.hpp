@@ -1,6 +1,7 @@
 #ifndef ___THREAD_POOL_POOL_KEEPER_H_DEFINED___
 #define ___THREAD_POOL_POOL_KEEPER_H_DEFINED___
 
+
 #include <thread>
 #include <vector>
 

@@ -14,6 +14,13 @@ namespace net {
       socket_descriptor_ = fd;
     }
 
+    communicating_tcp_socket::communicating_tcp_socket()
+    : generic_socket(SOCK_STREAM, IPPROTO_TCP) {}
+
+    void communicating_tcp_socket::set_fd(int fd) {
+      socket_descriptor_ = fd;
+    }
+
     int communicating_tcp_socket::recv(char* buffer, int len) {
       int received_len;
       received_len = ::recv(socket_descriptor_, buffer, len, 0);

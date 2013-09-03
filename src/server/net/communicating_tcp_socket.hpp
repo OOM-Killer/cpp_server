@@ -9,6 +9,8 @@ namespace net {
   class communicating_tcp_socket : public generic_socket {
     public:
       explicit communicating_tcp_socket(int);
+      explicit communicating_tcp_socket();
+      void set_fd(int);
       int recv(char* buffer, int len);
       void send(const char* buffer, int len);
   };
